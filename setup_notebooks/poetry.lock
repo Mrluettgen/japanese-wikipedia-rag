@@ -548,15 +548,14 @@ files = [
 
 [[package]]
 name = "click"
-version = "8.3.3"
+version = "8.3.2"
 description = "Composable command line interface toolkit"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
-markers = "python_version <= \"3.12\""
 files = [
-    {file = "click-8.3.3-py3-none-any.whl", hash = "sha256:a2bf429bb3033c89fa4936ffb35d5cb471e3719e1f3c8a7c3fff0b8314305613"},
-    {file = "click-8.3.3.tar.gz", hash = "sha256:398329ad4837b2ff7cbe1dd166a4c0f8900c3ca3a218de04466f38f6497f18a2"},
+    {file = "click-8.3.2-py3-none-any.whl", hash = "sha256:1924d2c27c5653561cd2cae4548d1406039cb79b858b747cfea24924bbc1616d"},
+    {file = "click-8.3.2.tar.gz", hash = "sha256:14162b8b3b3550a7d479eafa77dfd3c38d9dc8951f6f69c78913a8f9a7540fd5"},
 ]
 
 [package.dependencies]
@@ -3896,6 +3895,23 @@ files = [
 ]
 
 [[package]]
+name = "wikipedia-api"
+version = "0.14.1"
+description = "Python Wrapper for Wikipedia"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "wikipedia_api-0.14.1-py3-none-any.whl", hash = "sha256:cacfdb953c3802b96605d7ac78ee42dd7fe049f28ed47e632cfe943187b83c2b"},
+    {file = "wikipedia_api-0.14.1.tar.gz", hash = "sha256:1a4ac428711f673a983be5676eb6c5fa39130fc5869893923435884e0e2c3c31"},
+]
+
+[package.dependencies]
+click = "8.3.2"
+httpx = "0.28.1"
+tenacity = "9.1.4"
+
+[[package]]
 name = "xxhash"
 version = "3.7.0"
 description = "Python binding for xxHash"
@@ -4466,4 +4482,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<=3.13"
-content-hash = "bbadfba29fbaecba7332323ea97065ac0eb204c22010bc3520f6c2bf97b3ed80"
+content-hash = "8aad609f49b20a33a6f846a86e8566d35fe68b88c66ed15f3aeb93a13d145ea7"

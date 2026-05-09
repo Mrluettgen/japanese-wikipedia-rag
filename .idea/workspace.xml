@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e2fd7dc8-9c53-4c1e-9deb-9c6afda3a70e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/notebooks/basic_test.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/setup_notebooks/progress.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/setup_notebooks/upload_checkpoint.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/create-vector-store.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/setup_notebooks/create-vector-store.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/scrape-japanese-wikipedia.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/setup_notebooks/scrape-japanese-wikipedia.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/setup_notebooks/poetry.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/setup_notebooks/pyproject.toml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3DMHg6r2bPND1DSvK1FvLa5IYzn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;create-vector-store&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/MattsPC/GitRepos/japanese-wikipedia-rag&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\MattsPC\GitRepos\japanese-wikipedia-rag" />
+      <recent name="C:\Users\MattsPC\GitRepos\japanese-wikipedia-rag\notebooks" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-024ed6589d45-c2ffad84badb-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.23567.174" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e2fd7dc8-9c53-4c1e-9deb-9c6afda3a70e" name="Changes" comment="" />
+      <created>1778085127104</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778085127104</updated>
+      <workItem from="1778085128111" duration="8441000" />
+      <workItem from="1778105193672" duration="11350000" />
+      <workItem from="1778271287890" duration="15419000" />
+      <workItem from="1778340230494" duration="3551000" />
+      <workItem from="1778343984507" duration="2336000" />
+      <workItem from="1778346626441" duration="170000" />
+      <workItem from="1778346856466" duration="390000" />
+      <workItem from="1778347348547" duration="571000" />
+      <workItem from="1778347952787" duration="3408000" />
+      <workItem from="1778351503937" duration="2179000" />
+      <workItem from="1778355506339" duration="1000" />
+      <workItem from="1778355601608" duration="3345000" />
+      <workItem from="1778358967963" duration="6944000" />
+      <workItem from="1778367836368" duration="25000" />
+      <workItem from="1778367867710" duration="1050000" />
+      <workItem from="1778368933709" duration="72000" />
+      <workItem from="1778369015782" duration="319000" />
+      <workItem from="1778369358347" duration="223000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/japanese_wikipedia_rag$.coverage" NAME=" Coverage Results" MODIFIED="1778106237855" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>
