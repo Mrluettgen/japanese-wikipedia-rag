@@ -1,21 +1,30 @@
-[project]
+[tool.poetry]
 name = "japanese-wikipedia-rag"
 version = "0.1.0"
-description = "RAG pipeline for querying Japanese wikipedia with English"
-authors = [
-    {name = "Matt Luettgen",email = "mrluettgen@gmail.com"}
-]
-readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "wikipedia-api (>=0.14.1,<0.15.0)",
-    "ipykernel (>=7.2.0,<8.0.0)",
-    "tdqm (>=0.0.1,<0.0.2)"
-]
-
-[tool.poetry]
+description = "RAG pipeline"
+authors = ["Matt Luettgen <mrluettgen@gmail.com>"]
 package-mode = false
 
+[tool.poetry.dependencies]
+python = ">=3.10,<=3.13"
+
+# Main framework (fixed to 0.3 series)
+langchain = "^0.3.0"
+langchain-community = "^0.3.0"
+
+# Partner packages (relaxed to find the best match)
+langchain-voyageai = "*"
+langchain-pinecone = "*"
+
+# Stability pins
+numpy = ">=1.26.0,<2.0.0"
+pinecone = ">=5.3.1"
+python-dotenv = "^1.0.1"
+tqdm = "^4.66.0"
+mecab-python3 = "^1.0.12"
+unidic-lite = "^1.0.8"
+ipykernel = "^7.2.0"
+
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
