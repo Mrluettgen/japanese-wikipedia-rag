@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2fd7dc8-9c53-4c1e-9deb-9c6afda3a70e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/notebooks/basic_test.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setup_notebooks/progress.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setup_notebooks/upload_checkpoint.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/create-vector-store.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/setup_notebooks/create-vector-store.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/scrape-japanese-wikipedia.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/setup_notebooks/scrape-japanese-wikipedia.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/setup_notebooks/poetry.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/setup_notebooks/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/basic_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/basic_test.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +25,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Mrluettgen&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Mrluettgen/japanese-wikipedia-rag.git&quot;,
+    &quot;accountId&quot;: &quot;31248219-4f34-429c-ab7e-182b2901b1c3&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4,
   &quot;fromUser&quot;: false
@@ -46,7 +53,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;create-vector-store&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#2 on create-vector-store&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/MattsPC/GitRepos/japanese-wikipedia-rag&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
@@ -91,7 +98,8 @@
       <workItem from="1778367867710" duration="1050000" />
       <workItem from="1778368933709" duration="72000" />
       <workItem from="1778369015782" duration="319000" />
-      <workItem from="1778369358347" duration="223000" />
+      <workItem from="1778369358347" duration="642000" />
+      <workItem from="1778427880052" duration="631000" />
     </task>
     <servers />
   </component>
