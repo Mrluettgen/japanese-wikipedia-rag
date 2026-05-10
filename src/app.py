@@ -52,7 +52,7 @@ if st.button("Search & Answer"):
         
         # 6. Display Results
         st.subheader("Final Answer")
-        st.write(response.choices.message.content)
+        st.write(response.choices[0].message.content)
         
         with st.expander("See Retrieved Sources"):
             for match in results["matches"]:
