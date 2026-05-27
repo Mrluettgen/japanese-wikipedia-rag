@@ -12,6 +12,7 @@ python = "<3.14,>=3.10"
 ipykernel = "^7.2.0"
 dotenv = "^0.9.9"
 openai = "^2.36.0"
+pinecone-text = "^0.11.0"
 
 
 [build-system]
