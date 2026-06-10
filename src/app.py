@@ -4,7 +4,7 @@ import streamlit as st
 import voyageai
 from pinecone import Pinecone
 from openai import OpenAI
-from pinecone_text.sparse import BM25Encoder
+from pinecone_text.sparse import BM25Encoder, List
 
 
 # Page Config
@@ -34,67 +34,108 @@ bm25 = BM25Encoder().load("data/japanese_bm25_model.json")
 
 verbose = st.checkbox('Verbose Output')
 
-def translate_and_optimize_query(english_query: str) -> str:
-    """Translates English anime queries to Japanese, preserving proper nouns
-
-    and character names for optimal database matching.
-    """
+def translate_and_optimize_queries(english_queries):
+    """Translates a batch of English anime queries to Japanese in ONE API call."""
     system_prompt = (
         "You are an expert translator specializing in Japanese anime, manga, and pop culture. "
         "Your task is to translate user queries from English to Japanese so they can be searched in a Japanese Wikipedia database. "
         "Rules:\n"
-        "1. Maintain accurate Japanese titles for shows (e.g., 'Uma musume' -> 'ウマ娘', 'Attack on Titan' -> '進撃の巨人').\n"
+        "1. Maintain accurate Japanese titles for shows (e.g., 'Uma musume' -> 'ウマ娘').\n"
         "2. Keep character names accurate in Japanese.\n"
-        "3. Return ONLY the final translated search text. Do not provide explanations or extra commentary."
+        "3. Your output must strictly match the structure of the input array. "
+        "Translate each line cleanly, separating answers with a single newline. Do not add numbers, explanations, or commentary."
     )
+    
+    # Combine list into a single batched payload string
+    user_payload = "\n".join(english_queries)
+
     response = openai_client.chat.completions.create(
         model="gpt-4o-mini", 
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": english_query},
+            {"role": "user", "content": user_payload},
         ],
-        temperature=0.0,  # Deterministic output
+        temperature=0.0,
     )
 
-    japanese_translation = response.choices[0].message.content.strip()
-
+    # Parse translations back out cleanly
+    
+    japanese_translations = [t.strip() for t in response.choices[0].message.content.strip().split("\n")]
     if verbose: 
-        st.write(f"Original Query: {english_query}")
-        st.write(f"Japanese Translation: {japanese_translation}")
-    # Combine the Japanese translation with the original English query keywords
-    # This gives Voyage AI and MeCab the best of both worlds to look up.
-    optimized_search_string = f"{japanese_translation} {english_query}"
+        st.write("Alternate Queries and Japanese Translations:")
+        for en, ja in zip(english_queries, japanese_translations):
+            st.write(f"Original Query: {en}")
+            st.write(f"Japanese Translation: {ja}")
+    # Fallback guard if the LLM output length doesn't match perfectly
+    if len(japanese_translations) != len(english_queries):
+        japanese_translations = (japanese_translations + [""] * len(english_queries))[:len(english_queries)]
+    combined_search_strings = []
+    for ja, en in zip(japanese_translations, english_queries):
+        # Voyage handles this combined string perfectly
+        combined_search_strings.append(f"{ja} {en}")
 
-    return optimized_search_string
+    # Return BOTH so MeCab doesn't get poisoned by English text
+    return japanese_translations, combined_search_strings
 
-def query_pinecone(user_english_query: str, alpha: float = 0.35, top_k = 5):
-    # Translate the query to Japanese
-    search_string = translate_and_optimize_query(user_english_query)
 
-    # Generate Dense Vector from Voyage (using the translated string)
+def multi_query_rff(user_english_query: str, alpha: float = 0.7, top_k=5):
+    """Generates variations, splits them properly, and executes batch query retrieval."""
+    prompt = """Generate 3 different versions of this query that would help retrieve relevant documents.
+    Return 3 alternative queries that rephrase or approach the same question from different angles.
+    Separate with a single new line (\n) and do not include any explanations. Just the queries.
+    """
+    # 1 API CALL: Generate query variations
+    response = openai_client.chat.completions.create(
+        model="gpt-4o-mini", 
+        messages=[
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": user_english_query},
+        ],
+        temperature=0.5,
+    )
+    
+    alt_queries = [q.strip() for q in response.choices[0].message.content.strip().split("\n") if q.strip()]
+    alternative_queries = [user_english_query] + alt_queries[:3] 
+    batch_responses = batch_query_pinecone(alternative_queries, alpha=alpha, top_k=top_k)
+    all_results = [res.matches for res in batch_responses]
+    
+    return reciprocal_rank_fusion(all_results, k=60, verbose=True)
+
+def batch_query_pinecone(english_queries: List[str], alpha: float = 0.70, top_k=5):
+    """Queries Pinecone using batching while protecting MeCab from English words.
+    
+    Bumped alpha default to 0.50 to give dense vectors a balanced presence.
+    """
+    japanese_only, combined_strings = translate_and_optimize_queries(english_queries)
+
     dense_response = vo.embed(
-        texts=[search_string], model="voyage-4-lite", input_type="query"
+        texts=combined_strings, model="voyage-4-lite", input_type="query"
     )
-    query_dense = dense_response.embeddings[0]
+    all_dense_embeddings = dense_response.embeddings
 
-    # Generate Sparse Vector from MeCab BM25
-    query_sparse = bm25.encode_queries(search_string)
+    all_responses = []
+    for i in range(len(english_queries)):
+        query_dense = all_dense_embeddings[i]
 
-    # Scale vectors using the Alpha parameter
-    scaled_dense = [v * alpha for v in query_dense]
-    scaled_sparse = {
-        "indices": query_sparse["indices"],
-        "values": [v * (1 - alpha) for v in query_sparse["values"]],
-    }
+        query_sparse = bm25.encode_queries(japanese_only[i])
 
-    # Query Pinecone
-    response = index.query(
-        vector=scaled_dense,
-        sparse_vector=scaled_sparse,
-        top_k=top_k,
-        include_metadata=True,
-    )
-    return response
+        # Scale vectors
+        scaled_dense = [v * alpha for v in query_dense]
+        scaled_sparse = {
+            "indices": query_sparse["indices"],
+            "values": [v * (1 - alpha) for v in query_sparse["values"]],
+        }
+
+        # Query Pinecone
+        response = index.query(
+            vector=scaled_dense,
+            sparse_vector=scaled_sparse,
+            top_k=top_k,
+            include_metadata=True,
+        )
+        all_responses.append(response)
+        
+    return all_responses
 
 # Adapted from Harish Neel's public RAG tutorial series
 # Source: https://github.com/harishneel1/rag-for-beginners/blob/main/11_reciprocal_rank_fusion.py
@@ -144,26 +185,6 @@ def reciprocal_rank_fusion(chunk_lists, k=60, verbose=True):
     )    
     return sorted_chunks
 
-#note: I want to keep this seperate from the translation portion. To test each independantly. 
-def multi_query_rff(user_english_query: str, alpha: float = 0.35, top_k = 5):
-    prompt = """Generate 3 different versions of this query that would help retrieve relevant documents.
-    Return 3 alternative queries that rephrase or approach the same question from different angles.
-    Seperate with a new line and do not include any explanations. Just the queries.
-    """
-    response = openai_client.chat.completions.create(
-        model="gpt-4o-mini", 
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": user_english_query},
-        ],
-        temperature=0.5,
-    )
-    alternative_queries = [user_english_query] + response.choices[0].message.content.strip().split("\n\n")
-    all_results = [query_pinecone(q, alpha=alpha, top_k=top_k).matches for q in alternative_queries]
-    # Apply RRF to our retrieval results
-    fused_results = reciprocal_rank_fusion(all_results, k=60, verbose=True)
-    return fused_results
-
 def display_data(m): 
     string = f"""
     Japanese Title: {m.get('title_ja', 'Unknown')}
@@ -183,7 +204,7 @@ query = st.text_input("Ask a question about Anime/Manga:", "What kind of vehicle
 if st.button("Search & Answer"):
     with st.spinner("Thinking..."):
         # Retrieval
-        results = multi_query_rff(query, alpha=.35, top_k= 5)
+        results = multi_query_rff(query, alpha=.7, top_k= 5)
         metadatas = [results[i][0].metadata for i in range(len(results))]
         i = 0
         # Context Construction
